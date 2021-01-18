@@ -30,4 +30,10 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 
+	@Override
+	public BoardVO view(int bno) throws Exception {
+		
+		return sql.selectOne(namespace + ".view", bno);
+	}
+
 }
