@@ -8,6 +8,10 @@
 <title>insert title here</title>
 </head>
 <body>
+	<p>
+		<a href="../../">홈으로</a>
+	</p>
+
 	<table>
 		<thead>
 			<tr>
