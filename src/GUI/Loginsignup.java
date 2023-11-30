@@ -59,6 +59,7 @@ public class Loginsignup extends JFrame implements Serializable {
                 char[] passwordChars = passwordField.getPassword();
                 String password = new String(passwordChars);
                 
+                //DB객체 저장
                 LoginDBconnection db = new LoginDBconnection();
                 int id_num = db.sign_in(username, password);
                 if( id_num != 0) {
@@ -122,6 +123,7 @@ public class Loginsignup extends JFrame implements Serializable {
                     return;
                 }
 
+                //DB사용하는 부분
                 LoginDBconnection db = new LoginDBconnection();
                 db.sign_up(newUsername, newPassword);
                 

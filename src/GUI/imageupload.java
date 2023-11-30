@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
+import DB.imageDBconnection;
 
 public class imageupload {
 
@@ -25,7 +26,7 @@ public class imageupload {
     private JTextField dateTextField;
     private JComboBox<String> locationComboBox;
     private JTextArea memoTextArea;
-    private File selectedFile; // 파일 변수 선언
+
 
     
     public static void main(String[] args) {
@@ -37,6 +38,7 @@ public class imageupload {
                 e.printStackTrace();
             }
         });
+        
     }
     
     /**
@@ -44,6 +46,7 @@ public class imageupload {
      */
     public imageupload() {
         initialize();
+        
     }
 
     private void initialize() {
@@ -66,20 +69,27 @@ public class imageupload {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     filePathTextField.setText(selectedFile.getAbsolutePath());
-                    displayImage(selectedFile.getAbsolutePath());
+                    displayImage(selectedFile.getAbsolutePath());   
                 }
-                System.out.println(selectedFile.getAbsolutePath());
+                
             }
+            
         });
+     
         btnSelect.setBounds(45, 30, 100, 30);
         panel.add(btnSelect);
 
         JButton btnUpload = new JButton("Upload");
-        btnUpload.addActionListener(new ActionListener() {	
+        btnUpload.addActionListener(new ActionListener() {
+
+			@Override
 			public void actionPerformed(ActionEvent e) {
-                    System.out.println(selectedFile.getAbsolutePath());
+				// TODO Auto-generated method stub
+				String filePath = filePathTextField.getText();
+				imageDBconnection IDB = new imageDBconnection(filePath);
+				IDB.uploadImg(filePath, 1, "this is memo");
+				System.out.println(IDB.downloadImg("충북"));
 			}
-        	
         });
         btnUpload.setBounds(170, 30, 100, 30);
         panel.add(btnUpload);
@@ -87,7 +97,7 @@ public class imageupload {
         JLabel lblFilePath = new JLabel("File Path:");
         lblFilePath.setBounds(303, 30, 70, 30);
         panel.add(lblFilePath);
-
+        
         filePathTextField = new JTextField();
         filePathTextField.setEditable(false);
         filePathTextField.setBounds(375, 31, 400, 30);
@@ -110,7 +120,7 @@ public class imageupload {
         JLabel lblLocation = new JLabel("Location:");
         lblLocation.setBounds(733, 417, 70, 30);
         panel.add(lblLocation);
-
+        
         // Options for location
         String[] locationOptions = {"Area 1", "Area 2", "Area 3", "Area 4", "Area 5", "Area 6", "Area 7", "Area 8"};
         locationComboBox = new JComboBox<>(locationOptions);
