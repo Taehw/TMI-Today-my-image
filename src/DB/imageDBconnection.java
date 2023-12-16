@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.GpsDirectory;
+ 
 
 public class imageDBconnection extends DB_connection {
 
@@ -105,7 +106,6 @@ public class imageDBconnection extends DB_connection {
             e.printStackTrace();
         }
     }
-    
     public ArrayList<String> downloadImg(String local) {
        ArrayList<String> url=new ArrayList<>();
        try {
@@ -124,4 +124,42 @@ public class imageDBconnection extends DB_connection {
     }
        return new ArrayList<String>();
     }
+
+
+public String get_date(String url) {
+    try {
+        PreparedStatement ps = conn.prepareStatement("SELECT date FROM photo_table WHERE img_url = ?");
+        ps.setString(1, url);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            String date = rs.getString("date");
+            return date;
+        } else {
+            return null;
+        }
+    } catch (SQLException e) {
+        System.err.println("에러 발생");
+        e.printStackTrace();
+        return null;
+    }
+}
+public String get_local(String url) {
+    try {
+        PreparedStatement ps = conn.prepareStatement("SELECT location FROM photo_table WHERE img_url = ?");
+        ps.setString(1, url);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            String local = rs.getString("location");
+            return local;
+        } else {
+            return null;
+        }
+    } catch (SQLException e) {
+        System.err.println("에러 발생");
+        e.printStackTrace();
+        return null;
+    }
+}
 }
